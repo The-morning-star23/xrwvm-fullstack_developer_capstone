@@ -124,3 +124,81 @@ img{
     text-align:center;
     box-shadow: 2px 2px 3px #999;  
 }
+
+body {
+  background-color: #f5f5f5;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-wrapper {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 50px;
+  margin: 40px auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  max-width: 95%;
+}
+
+.contact-top-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 50px;
+}
+
+.contact-body {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: 40px; /* Keep reasonable gap between icon and line/text */
+  width: 100%;
+}
+
+.contact-icon {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end; /* Icon stays in place */
+  align-items: center;
+  padding-right: 150px; /* Minor adjustment */
+}
+
+.contact-icon img {
+  width: 220px;  /* Increased size */
+  height: 300px;
+}
+
+.contact-details {
+  flex: 2;
+  margin-left: 100px; /* ✅ This moves the entire block, including the line */
+  padding-left: 250px; /* Adjust this for spacing inside the block */
+  border-left: 2px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.contact-details h2 {
+  font-size: 40px;
+  margin-bottom: 30px;
+}
+
+.contact-details p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
