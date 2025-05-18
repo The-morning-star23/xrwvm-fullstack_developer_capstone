@@ -27,4 +27,17 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('djangoapp/', include('djangoapp.urls')),
     path('', TemplateView.as_view(template_name="Home.html")),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('dealers/', TemplateView.as_view(template_name="index.html")),
+    
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+    # Add this line to serve manifest.json directly from the React build folder
+    urlpatterns += [
+        path('manifest.json', TemplateView.as_view(
+            template_name='manifest.json',
+            content_type='application/json'
+        )),
+    ]
