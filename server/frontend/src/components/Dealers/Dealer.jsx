@@ -24,17 +24,29 @@ const Dealer = () => {
   let reviews_url = root_url+`djangoapp/reviews/dealer/${id}`;
   let post_review = root_url+`postreview/${id}`;
   
-  const get_dealer = async ()=>{
-    const res = await fetch(dealer_url, {
-      method: "GET"
-    });
-    const retobj = await res.json();
-    
-    if(retobj.status === 200) {
-      let dealerobjs = Array.from(retobj.dealer)
-      setDealer(dealerobjs[0])
+  const get_dealers = async () => {
+    try {
+      const res = await fetch(dealer_url);
+      if (!res.ok) {
+        throw new Error(`Server error: ${res.status}`);
+      }
+      const retobj = await res.json();
+  
+      if (Array.isArray(retobj.dealers)) {
+        let dealers = Array.from(retobj.dealers);
+        dealers(dealers);
+      } else {
+        console.warn("Unexpected response format: dealers missing or not an array", retobj);
+        setDealer([]);
+      }
+    } catch (error) {
+      console.error("Error fetching dealers:", error);
+      setDealer([]);
     }
-  }
+  };
+  
+  
+
 
   const get_reviews = async ()=>{
     const res = await fetch(reviews_url, {
@@ -57,7 +69,7 @@ const Dealer = () => {
   }
 
   useEffect(() => {
-    get_dealer();
+    get_dealers();
     get_reviews();
     if(sessionStorage.getItem("username")) {
       setPostReview(<a href={post_review}><img src={review_icon} style={{width:'10%',marginLeft:'10px',marginTop:'10px'}} alt='Post Review'/></a>)
@@ -71,10 +83,21 @@ const Dealer = () => {
 return(
   <div style={{margin:"20px"}}>
       <Header/>
-      <div style={{marginTop:"10px"}}>
-      <h1 style={{color:"grey"}}>{dealer.full_name}{postReview}</h1>
-      <h4  style={{color:"grey"}}>{dealer['city']},{dealer['address']}, Zip - {dealer['zip']}, {dealer['state']} </h4>
-      </div>
+      <div style={{ marginTop: "10px" }}>
+    {dealer && dealer.full_name ? (
+      <>
+        <h1 style={{ color: "grey" }}>
+          {dealer.full_name}
+          {postReview}
+        </h1>
+        <h4 style={{ color: "grey" }}>
+          {dealer.city}, {dealer.address}, Zip - {dealer.zip}, {dealer.state}
+        </h4>
+      </>
+    ) : (
+      <h4>Loading dealer details...</h4>
+    )}
+  </div>
       <div class="reviews_panel">
       {reviews.length === 0 && unreviewed === false ? (
         <text>Loading Reviews....</text>

@@ -99,13 +99,17 @@ def registration(request):
 # ...
 #Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
 def get_dealerships(request, state="All"):
-    if(state == "All"):
+    if state == "All":
         endpoint = "/fetchDealers"
     else:
-        endpoint = "/fetchDealers/"+state
-    dealerships = get_request(endpoint)
-    return JsonResponse({"status":200,"dealers":dealerships})
+        endpoint = f"/fetchDealers/{state}"
     
+    dealerships = get_request(endpoint)
+    
+    if isinstance(dealerships, list) and dealerships:
+        return JsonResponse({"status": 200, "dealers": dealerships})
+    else:
+        return JsonResponse({"status": 404, "message": "No dealers found"})
 def get_cars(request):
     count = CarModel.objects.count()
     print(count)
@@ -129,10 +133,10 @@ def get_dealer_reviews(request, dealer_id):
         for review_detail in reviews:
             response = analyze_review_sentiments(review_detail['review'])
             print(response)
-            review_detail['sentiment'] = response['sentiment']
-        return JsonResponse({"status":200,"reviews":reviews})
-    else:
-        return JsonResponse({"status":400,"message":"Bad Request"})
+            if response and "sentiment" in response:
+                review_detail["sentiment"] = response["sentiment"]
+            else:
+                review_detail["sentiment"] = "unknown"
 # Create a `get_dealer_details` view to render the dealer details
 # def get_dealer_details(request, dealer_id):
 # ...
