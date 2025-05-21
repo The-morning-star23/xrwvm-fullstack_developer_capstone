@@ -126,17 +126,24 @@ def get_cars(request):
 # def get_dealer_reviews(request,dealer_id):
 # ...
 def get_dealer_reviews(request, dealer_id):
-    # if dealer id has been provided
-    if(dealer_id):
-        endpoint = "/fetchReviews/dealer/"+str(dealer_id)
+    if dealer_id:
+        endpoint = "/fetchReviews/dealer/" + str(dealer_id)
         reviews = get_request(endpoint)
+
+        review_list = []
         for review_detail in reviews:
-            response = analyze_review_sentiments(review_detail['review'])
-            print(response)
-            if response and "sentiment" in response:
-                review_detail["sentiment"] = response["sentiment"]
-            else:
-                review_detail["sentiment"] = "unknown"
+            sentiment_response = analyze_review_sentiments(review_detail['review'])
+            review_detail["sentiment"] = sentiment_response.get("sentiment", "unknown")
+            review_list.append(review_detail)
+
+        return JsonResponse({
+            "status": 200,
+            "reviews": review_list
+        })
+    else:
+        return JsonResponse({"status": 400, "message": "Bad Request"})
+
+
 # Create a `get_dealer_details` view to render the dealer details
 # def get_dealer_details(request, dealer_id):
 # ...

@@ -30,20 +30,25 @@ const Dealer = () => {
       if (!res.ok) {
         throw new Error(`Server error: ${res.status}`);
       }
+  
       const retobj = await res.json();
   
-      if (Array.isArray(retobj.dealers)) {
-        let dealers = Array.from(retobj.dealers);
-        dealers(dealers);
+      // Expecting a single dealer object under the 'dealer' key
+      if (retobj.status === 200 && retobj.dealer) {
+        setDealer(retobj.dealer);
+      } else if (retobj.dealers && Array.isArray(retobj.dealers)) {
+        // Fallback if the backend sends a list
+        setDealer(retobj.dealers[0]);
       } else {
-        console.warn("Unexpected response format: dealers missing or not an array", retobj);
-        setDealer([]);
+        console.warn("Unexpected response format:", retobj);
+        setDealer({});
       }
     } catch (error) {
-      console.error("Error fetching dealers:", error);
-      setDealer([]);
+      console.error("Error fetching dealer:", error);
+      setDealer({});
     }
   };
+  
   
   
 

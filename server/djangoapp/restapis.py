@@ -33,9 +33,8 @@ def get_request(endpoint, **kwargs):
 # request_url = sentiment_analyzer_url+"analyze/"+text
 # Add code for retrieving sentiments
 def analyze_review_sentiments(text):
-    request_url = sentiment_analyzer_url + "analyze/" + text
     try:
-        response = requests.get(request_url)
+        response = requests.get(sentiment_analyzer_url + "analyze", params={"text": text})
         return response.json()
     except Exception as err:
         print(f"Sentiment analysis failed: {err}")
