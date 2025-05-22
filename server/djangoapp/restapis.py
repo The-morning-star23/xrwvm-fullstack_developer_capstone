@@ -2,6 +2,7 @@
 import requests
 import os
 from dotenv import load_dotenv
+import urllib.parse
 
 load_dotenv()
 
@@ -33,13 +34,18 @@ def get_request(endpoint, **kwargs):
 # request_url = sentiment_analyzer_url+"analyze/"+text
 # Add code for retrieving sentiments
 def analyze_review_sentiments(text):
+    sentiment_analyzer_url = "https://sentianalyzer.1vqu8rojftrt.us-south.codeengine.appdomain.cloud/analyze"
+
+def analyze_review_sentiments(text):
     try:
-        response = requests.get(sentiment_analyzer_url + "analyze", params={"text": text})
+        encoded_text = urllib.parse.quote(text)
+        request_url = f"{sentiment_analyzer_url}/{encoded_text}"
+        response = requests.get(request_url, timeout=10)  # give it a bit more time
+        response.raise_for_status()
         return response.json()
     except Exception as err:
         print(f"Sentiment analysis failed: {err}")
         return {"sentiment": "unknown"}
-
 
 # def post_review(data_dict):
 # Add code for posting review

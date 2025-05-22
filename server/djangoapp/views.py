@@ -18,6 +18,7 @@ from django.contrib.auth import login, authenticate
 import logging
 import json
 from django.views.decorators.csrf import csrf_exempt
+from .restapis import get_request, analyze_review_sentiments, post_review
 from .populate import initiate
 
 
