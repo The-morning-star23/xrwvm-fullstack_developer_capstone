@@ -37,9 +37,7 @@ def get_request(endpoint, **kwargs):
 # request_url = sentiment_analyzer_url+"analyze/"+text
 # Add code for retrieving sentiments
 def analyze_review_sentiments(text):
-    sentiment_analyzer_url = (
-        "https://sentianalyzer.1vqu8rojftrt.us-south.codeengine.appdomain.cloud/analyze"
-    )
+    pass
 
 
 def analyze_review_sentiments(text):

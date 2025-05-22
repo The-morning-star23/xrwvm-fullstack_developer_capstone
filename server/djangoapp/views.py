@@ -2,20 +2,16 @@
 
 import json
 import logging
-from datetime import datetime
 
-import requests
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from djangoapp.restapis import (analyze_review_sentiments, get_request,
                                 post_review)
 
-from .models import CarMake, CarModel
+from .models import CarModel
 from .populate import initiate
 from .restapis import analyze_review_sentiments, get_request, post_review
 
@@ -46,7 +42,6 @@ def login_user(request):
 # Create a `logout_request` view to handle sign out request
 @csrf_exempt
 def logout_view(request):
-    username = request.user.username  # Capture current username before logout
     logout(request)  # Terminate user session
     data = {"userName": ""}  # Return empty username (per spec)
     return JsonResponse(data)
@@ -62,7 +57,6 @@ def logout_view(request):
 # ...
 @csrf_exempt
 def registration(request):
-    context = {}
 
     # Load JSON data from the request body
     data = json.loads(request.body)
@@ -72,7 +66,6 @@ def registration(request):
     last_name = data["lastName"]
     email = data["email"]
     username_exist = False
-    email_exist = False
     try:
         # Check if user already exists
         User.objects.get(username=username)
@@ -166,10 +159,10 @@ def get_dealer_details(request, dealer_id):
 # def add_review(request):
 # ...
 def add_review(request):
-    if request.user.is_anonymous == False:
+    if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
-            response = post_review(data)
+            post_review(data)
             return JsonResponse({"status": 200})
         except:
             return JsonResponse({"status": 401, "message": "Error in posting review"})
