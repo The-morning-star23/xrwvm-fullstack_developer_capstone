@@ -7,11 +7,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from djangoapp.restapis import (
-    analyze_review_sentiments,
-    get_request,
-    post_review,
-)
 from .models import CarModel
 from .populate import initiate
 from .restapis import analyze_review_sentiments, get_request, post_review
@@ -122,7 +117,7 @@ def get_cars(request):
     car_models = CarModel.objects.select_related("car_make")
     cars = []
     for car_model in car_models:
-        cars.append (
+        cars.append(
             {
                 "CarModel": car_model.name,
                 "CarMake": car_model.car_make.name
@@ -141,13 +136,24 @@ def get_dealer_reviews(request, dealer_id):
 
         review_list = []
         for review_detail in reviews:
-            sentiment_response = analyze_review_sentiments(review_detail["review"])
-            review_detail["sentiment"] = sentiment_response.get("sentiment", "unknown")
+            sentiment_response = analyze_review_sentiments(
+                review_detail["review"]
+            )
+            review_detail["sentiment"] = sentiment_response.get(
+                "sentiment", "unknown"
+            )
             review_list.append(review_detail)
 
-        return JsonResponse({"status": 200, "reviews": review_list})
+        return JsonResponse({
+            "status": 200,
+            "reviews": review_list
+        })
     else:
-        return JsonResponse({"status": 400, "message": "Bad Request"})
+        return JsonResponse({
+            "status": 400,
+            "message": "Bad Request"
+        })
+
 
 
 # Create a `get_dealer_details` view to render the dealer details
@@ -172,9 +178,9 @@ def add_review(request):
             post_review(data)
             return JsonResponse({"status": 200})
         except Exception:
-            return JsonResponse (
+            return JsonResponse(
                 {
-                    "status": 401, 
+                    "status": 401,
                     "message": "Error in posting review"
                 }
             )
