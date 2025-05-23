@@ -7,8 +7,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from djangoapp.restapis import analyze_review_sentiments, get_request, post_review
-
+from djangoapp.restapis import (
+    analyze_review_sentiments,
+    get_request,
+    post_review,
+)
 from .models import CarModel
 from .populate import initiate
 from .restapis import analyze_review_sentiments, get_request, post_review
@@ -95,7 +98,8 @@ def registration(request):
 # a list of dealerships
 # def get_dealerships(request):
 # ...
-# Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
+# Update the `get_dealerships` render list of dealerships all by default,
+#  particular state if state is passed
 def get_dealerships(request, state="All"):
     if state == "All":
         endpoint = "/fetchDealers"
