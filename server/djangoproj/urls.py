@@ -31,28 +31,28 @@ urlpatterns = [
     path("", TemplateView.as_view(template_name="Home.html")),
     path("dealers/", TemplateView.as_view(template_name="index.html")),
     path(
-        "dealer/<int:dealer_id>", 
-         TemplateView.as_view(template_name="index.html")
-         ),
+        "dealer/<int:dealer_id>",
+        TemplateView.as_view(template_name="index.html")
+    ),
     path(
         "reviews/dealer/<int:dealer_id>/",
         views.get_dealer_reviews,
         name="get_dealer_reviews",
     ),
     path(
-        "postreview/<int:dealer_id>", 
+        "postreview/<int:dealer_id>",
         TemplateView.as_view(template_name="index.html")
     ),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(
-        settings.STATIC_URL, 
+        settings.STATIC_URL,
         document_root=settings.STATIC_ROOT
     )
 
-    # Add this line to serve manifest.json 
-    #directly from the React build folder
+    # Add this line to serve manifest.json
+    # directly from the React build folder
     urlpatterns += [
         path(
             "manifest.json",
