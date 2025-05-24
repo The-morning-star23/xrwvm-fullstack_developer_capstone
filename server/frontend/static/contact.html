@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>Contact Us</title>
-    <link rel="stylesheet" href="/static/bootstrap.min.css" />
-    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
   </head>
   <nav
     class="navbar navbar-expand-lg navbar-light"
@@ -42,14 +42,14 @@
   <body>
     <div class="contact-wrapper">
       <img
-        src="/static/car_dealership.jpg"
+        src="{% static 'car_dealership.jpg' %}"
         alt="Cars Icon"
         class="contact-top-image"
       />
 
       <div class="contact-body">
         <div class="contact-icon">
-          <img src="/static/contactus.png" alt="Contact Icon" />
+          <img src="{% contactus.png' %}" alt="Contact Icon" />
         </div>
         <div class="contact-details">
           <h2>Get in Touch</h2>

@@ -1,3 +1,4 @@
+{% load static %}
 <html>
   <head>
     <link
@@ -11,24 +12,18 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="static/style.css" />
-    <link rel="stylesheet" href="static/bootstrap.min.css" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}" />
     <script>
       const logout = async (e) => {
-        // Build logout URL and Make GET request to logout endpoint
         let logout_url = window.location.origin + "/djangoapp/logout/";
-        const res = await fetch(logout_url, {
-          method: "GET",
-        });
-
+        const res = await fetch(logout_url, { method: "GET" });
         const json = await res.json();
         if (json) {
-          // Clear session storage and reload page
           let username = sessionStorage.getItem("username");
           sessionStorage.removeItem("username");
           window.location.href = window.location.origin;
           window.location.reload();
-          // Notify user of logout
           alert("Logging out " + username + "...");
         } else {
           alert("The user could not be logged out.");
@@ -37,7 +32,6 @@
 
       let checkSession = () => {
         let curr_user = sessionStorage.getItem("username");
-
         if (curr_user && curr_user !== "") {
           document.getElementById("loginlogout").innerHTML =
             '<span class="homepage_links">' +
@@ -103,7 +97,7 @@
         class="card"
         style="width: 50%; margin-top: 50px; align-self: center"
       >
-        <img src="static/car_dealership.jpg" class="card-img-top" alt="..." />
+        <img src="{% static 'car_dealership.jpg' %}" class="card-img-top" alt="..." />
         <div class="banner">
           <h5>Welcome to our Dealerships!</h5>
           <a

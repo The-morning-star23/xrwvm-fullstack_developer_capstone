@@ -1,9 +1,10 @@
+{% load static %}
 <html>
 <head>
-  <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
 </head>
-<div>
+<body>
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
     <div class="container-fluid">
       <h2 style="padding-right: 5%;">Dealerships</h2>
@@ -26,45 +27,42 @@
     </div>
   </nav>
   
-    <div class="card" style="width: 80%;margin: auto; margin-top:5%;">
-      <div class="banner" name="about-header">
-          <h1>About Us</h1>
-          Welcome to Best Cars dealership, home to the best cars in North America. We deal in sale of domestic and imported cars at reasonable prices.
-      </div>
-      <div style="display: flex;flex-direction: row; margin:auto">
+  <div class="card" style="width: 80%;margin: auto; margin-top:5%;">
+    <div class="banner" name="about-header">
+        <h1>About Us</h1>
+        Welcome to Best Cars dealership, home to the best cars in North America. We deal in sale of domestic and imported cars at reasonable prices.
+    </div>
+    <div style="display: flex;flex-direction: row; margin:auto">
       <div class="card" style="width: 30%;">
-        <img class="card-img-top" src="/static/person3.jpg" alt="Card image">
+        <img class="card-img-top" src="{% static 'person3.jpg' %}" alt="Card image">
         <div class="card-body">
           <p class="title">Priya</p>
           <p>Person1 Title</p>
-          <p class="card-text">Priya is a skilled automotive designer who loves sketching futuristic concept cars late into the night. Her dream is to create an eco-friendly sports car that turns heads and saves the planet.</p>
+          <p class="card-text">Priya is a skilled automotive designer who loves sketching futuristic concept cars late into the night...</p>
           <p>priya@example.com</p>
         </div>
       </div>
 
       <div class="card" style="width: 30%;">
-        <img class="card-img-top" src="/static/person.jpg" alt="Card image">
+        <img class="card-img-top" src="{% static 'person.jpg' %}" alt="Card image">
         <div class="card-body">
           <p class="title">Raj</p>
           <p>Person2 Title</p>
-          <p class="card-text">Raj is a part-time Uber driver and full-time car enthusiast who rebuilds vintage engines in his garage. He names every car he owns and treats them like family.</p>
+          <p class="card-text">Raj is a part-time Uber driver and full-time car enthusiast...</p>
           <p>raj@example.com</p>
         </div>
       </div>
 
       <div class="card" style="width: 30%;">
-        <img class="card-img-top" src="/static/person2.jpg" alt="Card image">
+        <img class="card-img-top" src="{% static 'person2.jpg' %}" alt="Card image">
         <div class="card-body">
           <p class="title">Aditya</p>
           <p>Person3 Title</p>
-          <p class="card-text">Aditya is a software engineer working on AI systems for autonomous vehicles. He's obsessed with Teslas and dreams of building his own self-driving rally car someday.</p>
+          <p class="card-text">Aditya is a software engineer working on AI systems for autonomous vehicles...</p>
           <p>aditya@example.com</p>
         </div>
       </div>
     </div>
-    </div>
-    </div>
-    
-</div>
-
+  </div>
+</body>
 </html>

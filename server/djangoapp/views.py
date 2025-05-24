@@ -187,3 +187,8 @@ def add_review(request):
             )
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
+
+
+def analyze_review(request, text):
+    sentiment_result = analyze_review_sentiments(text)
+    return JsonResponse(sentiment_result)
