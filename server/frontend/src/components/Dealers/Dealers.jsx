@@ -6,39 +6,41 @@ import review_icon from "../assets/reviewicon.png";
 
 const Dealers = () => {
   const [dealersList, setDealersList] = useState([]);
-  const [states, setStates] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [originalDealers, setOriginalDealers] = useState([]);
+  const dealer_url = "/djangoapp/get_dealers/";
 
-  const dealer_url = "/djangoapp/get_dealers";
-
-  const filterDealers = async (state) => {
-    if (state === "All" || state === "") {
-      get_dealers();
-      return;
-    }
-    const url = dealer_url + "/" + state;
-    const res = await fetch(url, { method: "GET" });
-    const retobj = await res.json();
-    if (retobj.status === 200) {
-      setDealersList(Array.from(retobj.dealers));
-    }
-  };
 
   const get_dealers = async () => {
-    const res = await fetch(dealer_url, { method: "GET" });
-    const retobj = await res.json();
-    if (retobj.status === 200) {
-      const all_dealers = Array.from(retobj.dealers);
-      const uniqueStates = [...new Set(all_dealers.map((d) => d.state))];
-      setStates(uniqueStates);
-      setDealersList(all_dealers);
-    }
-  };
+  const res = await fetch(dealer_url, { method: "GET" });
+  const retobj = await res.json();
+  if (retobj.status === 200) {
+    const all_dealers = Array.from(retobj.dealers);
+    setDealersList(all_dealers);
+    setOriginalDealers(all_dealers);
+  }
+};
 
   useEffect(() => {
     get_dealers();
   }, []);
 
   const isLoggedIn = sessionStorage.getItem("username") != null;
+
+  const handleInputChange = (event) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+    const filtered = originalDealers.filter(dealer =>
+      dealer.state.toLowerCase().includes(query.toLowerCase())
+    );
+    setDealersList(filtered);
+  };
+
+  const handleLostFocus = () => {
+    if (!searchQuery) {
+      setDealersList(originalDealers);
+    }
+  };
 
   return (
     <div>
@@ -53,21 +55,13 @@ const Dealers = () => {
             <th>Address</th>
             <th>Zip</th>
             <th>
-              <select
-                name="state"
-                id="state"
-                onChange={(e) => filterDealers(e.target.value)}
-              >
-                <option value="" disabled hidden>
-                  State
-                </option>
-                <option value="All">All States</option>
-                {states.map((state) => (
-                  <option key={state} value={state}>
-                    {state}
-                  </option>
-                ))}
-              </select>
+              <input 
+                type="text" 
+                placeholder="Search states..." 
+                onChange={handleInputChange} 
+                onBlur={handleLostFocus} 
+                value={searchQuery} 
+              />
             </th>
             {isLoggedIn && <th>Review Dealer</th>}
           </tr>
