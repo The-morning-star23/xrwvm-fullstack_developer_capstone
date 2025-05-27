@@ -10,8 +10,9 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import CarModel
 from .populate import initiate
 from .restapis import (
-    analyze_review_sentiments, 
-    get_request,post_review, 
+    analyze_review_sentiments,
+    get_request,
+    post_review,
     searchcars_request
 )
 
