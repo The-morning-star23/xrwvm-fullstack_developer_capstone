@@ -46,7 +46,7 @@ urlpatterns = [
     path(
         "searchcars/<int:dealer_id>",
         TemplateView.as_view(template_name="index.html")
-    ),	
+    ),
 ]
 
 if settings.DEBUG:
