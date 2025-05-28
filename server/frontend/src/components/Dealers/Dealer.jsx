@@ -103,6 +103,7 @@ const Dealer = () => {
               {dealer.city}, {dealer.address}, Zip - {dealer.zip},{" "}
               {dealer.state}
             </h4>
+            <a href={`/searchcars/${id}`}>SearchCars</a>	
           </>
         ) : (
           <h4>Loading dealer details...</h4>
